@@ -1,0 +1,5 @@
+C:\Users\Caleb\Workspace\c#\DATreconstruct\DATreconstruct\bin\Debug\DATreconstruct.exe
+C:\Users\Caleb\Workspace\c#\DATreconstruct\DATreconstruct\bin\Debug\DATreconstruct.pdb
+C:\Users\Caleb\Workspace\c#\DATreconstruct\DATreconstruct\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Caleb\Workspace\c#\DATreconstruct\DATreconstruct\obj\x86\Debug\DATreconstruct.exe
+C:\Users\Caleb\Workspace\c#\DATreconstruct\DATreconstruct\obj\x86\Debug\DATreconstruct.pdb
