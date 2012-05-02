@@ -9,9 +9,10 @@ namespace DATreconstruct
     {
         static void Main(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length < 2 || args.Length > 3)
             {
-                Console.WriteLine("Syntax: DATreconstruct infile.bin outfile.txt");
+                Console.WriteLine("Syntax: DATreconstruct infile.bin outfile.txt <options>");
+                Console.WriteLine("Options: -l  : Use little endian instead of big.");
                 return;
             }
 
@@ -22,6 +23,7 @@ namespace DATreconstruct
             }
 
             byte[] bytes = System.IO.File.ReadAllBytes(args[0]);
+            
 
             bool firstHalf = true;
             bool firstByte = true;
@@ -30,19 +32,37 @@ namespace DATreconstruct
             sb.Append("DAT ");
             foreach (byte b in bytes)
             {
-                if (firstHalf)
+                if (args.Length > 2 && args[2] == "-l")
                 {
-                    first = b;                    
+                    if (firstHalf)
+                    {
+                        first = b;
+                    }
+                    else
+                    {
+                        if (!firstByte) { sb.Append(", "); }
+                        else { firstByte = false; }
+                        sb.Append("0x");
+                        sb.AppendFormat("{0:x2}", b);
+                        sb.AppendFormat("{0:x2}", first);
+                    }
+                    firstHalf = !firstHalf;
                 }
                 else
                 {
-                    if (!firstByte) { sb.Append(", "); }
-                    else { firstByte = false; }
-                    sb.Append("0x");
-                    sb.AppendFormat("{0:x2}", b);
-                    sb.AppendFormat("{0:x2}", first);                    
+                    if (firstHalf)
+                    {
+                        if (!firstByte) { sb.Append(", "); }
+                        else { firstByte = false; }
+                        sb.Append("0x");
+                        sb.AppendFormat("{0:x2}", b);
+                    }
+                    else
+                    {
+                        sb.AppendFormat("{0:x2}", b);
+                    }
+                    firstHalf = !firstHalf;
                 }
-                firstHalf = !firstHalf;
             }
             System.IO.File.WriteAllText(args[1], sb.ToString());
         }
